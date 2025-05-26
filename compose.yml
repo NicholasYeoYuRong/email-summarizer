@@ -1,0 +1,24 @@
+version: "3.8"
+services:
+  fastapi:
+    build: .
+    container_name: email-summarizer
+    ports:
+      - "8000:8000"
+    networks:
+      - mailshield-net
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    restart: always
+    ports:
+      - "11435:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    networks:
+      - mailshield-net
+volumes:
+  ollama_data:
+networks:
+  mailshield-net:
+    driver: bridge
